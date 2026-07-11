@@ -1,0 +1,15 @@
+# TWISTER Atari100K Pong reproduction without AC-CPC, with local machine paths.
+#
+# AC-CPC ablation: loss_contrastive_scale=0.0.
+# Keep intermediate Atari eval lightweight on this machine: 3 episodes per eval.
+#
+# Run:
+#   tiny-exp-scheduler run scripts/experiments/pong_atari100k_reproduction_no_ac_cpc.scorpio.commands.txt \
+#     --cuda-devices 0 \
+#     --idle-memory-threshold-mb 6000 \
+#     --idle-utilization-threshold 10 \
+#     --logs-dir callbacks/pong_atari100k_reproduction_no_ac_cpc/scheduler_logs \
+#     --verbose \
+#     --keep-job-tabs
+
+bash -lc 'cd /home/lyk/projects/twister && WANDB_PROJECT=twister-ac-cpc-ablation WANDB_ENTITY=ssl-lab WANDB_MODE=offline WANDB_NAME=pong_atari100k_reproduction_no_ac_cpc env_name=atari100k-pong run_name=pong_atari100k_reproduction_no_ac_cpc override_config='"'"'{"model_size":"base","loss_contrastive_scale":0.0,"eval_episodes":3}'"'"' LD_LIBRARY_PATH=/home/lyk/miniconda3/envs/twister/lib:${LD_LIBRARY_PATH:-} /home/lyk/miniconda3/envs/twister/bin/python main.py --wandb --eval_period_step 5000 --saving_period_epoch 5 --step_log_period 100 --keep_last_k 3'

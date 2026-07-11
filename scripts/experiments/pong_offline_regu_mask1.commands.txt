@@ -1,0 +1,28 @@
+# Auto-generated TWISTER offline Pong model-size and spatial-regularization jobs for tiny-exp-scheduler.
+#
+# Run from /scorpio/home/luyukuan/projects/twister with conda env twister.
+# Dataset path: datasets/converted_from_diamond/pong/train
+# Model sizes: ['base', 'size200m', 'size400m']
+# WM initial source: real
+# Mask presets: ['mask1']
+# Spatial weights: [0.0, 0.01, 0.1, 1.0]
+# Train steps: 200000
+# Batch size: 16
+# Batch length: 64
+# Total jobs: 12
+#
+# Usage:
+#   tiny-exp-scheduler run scripts/experiments/pong_offline_regu_mask1.commands.txt --cuda-devices auto --logs-dir runs/pong_offline_regu_sweep/scheduler_logs --verbose --keep-job-tabs
+
+python -u train_offline.py --dataset-path datasets/converted_from_diamond/pong/train --run-root runs/pong_offline_regu_sweep/logdir --run-name twister_pong_offline_regu_model=base_mask1_spatial_0 --model-size base --wm-initial-source real --spatial-regu-weight 0 --mask-preset mask1 --train-steps 200000 --batch-size 16 --batch-length 64
+python -u train_offline.py --dataset-path datasets/converted_from_diamond/pong/train --run-root runs/pong_offline_regu_sweep/logdir --run-name twister_pong_offline_regu_model=base_mask1_spatial_0p01 --model-size base --wm-initial-source real --spatial-regu-weight 0.01 --mask-preset mask1 --train-steps 200000 --batch-size 16 --batch-length 64
+python -u train_offline.py --dataset-path datasets/converted_from_diamond/pong/train --run-root runs/pong_offline_regu_sweep/logdir --run-name twister_pong_offline_regu_model=base_mask1_spatial_0p1 --model-size base --wm-initial-source real --spatial-regu-weight 0.1 --mask-preset mask1 --train-steps 200000 --batch-size 16 --batch-length 64
+python -u train_offline.py --dataset-path datasets/converted_from_diamond/pong/train --run-root runs/pong_offline_regu_sweep/logdir --run-name twister_pong_offline_regu_model=base_mask1_spatial_1 --model-size base --wm-initial-source real --spatial-regu-weight 1 --mask-preset mask1 --train-steps 200000 --batch-size 16 --batch-length 64
+python -u train_offline.py --dataset-path datasets/converted_from_diamond/pong/train --run-root runs/pong_offline_regu_sweep/logdir --run-name twister_pong_offline_regu_model=size200m_mask1_spatial_0 --model-size size200m --wm-initial-source real --spatial-regu-weight 0 --mask-preset mask1 --train-steps 200000 --batch-size 16 --batch-length 64
+python -u train_offline.py --dataset-path datasets/converted_from_diamond/pong/train --run-root runs/pong_offline_regu_sweep/logdir --run-name twister_pong_offline_regu_model=size200m_mask1_spatial_0p01 --model-size size200m --wm-initial-source real --spatial-regu-weight 0.01 --mask-preset mask1 --train-steps 200000 --batch-size 16 --batch-length 64
+python -u train_offline.py --dataset-path datasets/converted_from_diamond/pong/train --run-root runs/pong_offline_regu_sweep/logdir --run-name twister_pong_offline_regu_model=size200m_mask1_spatial_0p1 --model-size size200m --wm-initial-source real --spatial-regu-weight 0.1 --mask-preset mask1 --train-steps 200000 --batch-size 16 --batch-length 64
+python -u train_offline.py --dataset-path datasets/converted_from_diamond/pong/train --run-root runs/pong_offline_regu_sweep/logdir --run-name twister_pong_offline_regu_model=size200m_mask1_spatial_1 --model-size size200m --wm-initial-source real --spatial-regu-weight 1 --mask-preset mask1 --train-steps 200000 --batch-size 16 --batch-length 64
+python -u train_offline.py --dataset-path datasets/converted_from_diamond/pong/train --run-root runs/pong_offline_regu_sweep/logdir --run-name twister_pong_offline_regu_model=size400m_mask1_spatial_0 --model-size size400m --wm-initial-source real --spatial-regu-weight 0 --mask-preset mask1 --train-steps 200000 --batch-size 16 --batch-length 64
+python -u train_offline.py --dataset-path datasets/converted_from_diamond/pong/train --run-root runs/pong_offline_regu_sweep/logdir --run-name twister_pong_offline_regu_model=size400m_mask1_spatial_0p01 --model-size size400m --wm-initial-source real --spatial-regu-weight 0.01 --mask-preset mask1 --train-steps 200000 --batch-size 16 --batch-length 64
+python -u train_offline.py --dataset-path datasets/converted_from_diamond/pong/train --run-root runs/pong_offline_regu_sweep/logdir --run-name twister_pong_offline_regu_model=size400m_mask1_spatial_0p1 --model-size size400m --wm-initial-source real --spatial-regu-weight 0.1 --mask-preset mask1 --train-steps 200000 --batch-size 16 --batch-length 64
+python -u train_offline.py --dataset-path datasets/converted_from_diamond/pong/train --run-root runs/pong_offline_regu_sweep/logdir --run-name twister_pong_offline_regu_model=size400m_mask1_spatial_1 --model-size size400m --wm-initial-source real --spatial-regu-weight 1 --mask-preset mask1 --train-steps 200000 --batch-size 16 --batch-length 64

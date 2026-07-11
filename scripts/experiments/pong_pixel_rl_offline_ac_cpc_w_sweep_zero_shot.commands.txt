@@ -1,0 +1,40 @@
+# Zero-shot RL in TWISTER offline-trained Pong WMs with AC-CPC enabled.
+#
+# Spatial weights: [0.0, 0.003, 0.005, 0.01, 0.02, 0.05, 0.1, 1.0]
+# WM checkpoints are restored from the Box package:
+#   box:offline_training/twister/twister_offline_ac_cpc_spatial_wm_ckpts_w0_to_w10_20260612T144102/
+# Local checkpoint root after extraction:
+#   external_wm_ckpts/offline_ac_cpc_spatial/
+#
+# Protocol: common rl-in-pixel-env Pong WM protocol.
+#   - 20k actor-critic updates
+#   - 64 envs
+#   - backup length 15
+#   - horizon 512
+#   - reset=real
+#   - reward quantization threshold 0.1
+#   - real Atari eval every 2000 AC updates, 5 episodes
+#   - scalar log every 1000 AC updates
+#   - policy checkpoint/video every 10000 AC updates
+#   - CPU math thread pools limited to 1 thread per job to reduce host contention
+#
+# Launch on pandaria from the TWISTER repository root. Use explicit GPU ids;
+# tiny-exp-scheduler runs one job per listed GPU. If CPU contention is still
+# high, reduce the list to 0,1 instead of changing the experiment protocol.
+#
+#   conda activate twister
+#   cd "$HOME/projects/twister"
+#   tiny-exp-scheduler run scripts/experiments/pong_pixel_rl_offline_ac_cpc_w_sweep_zero_shot.commands.txt \
+#     --cuda-devices 0,1,2,3 \
+#     --logs-dir pong_pixel_rl_in_env/scheduler_logs/offline_ac_cpc_w_sweep_zero_shot_pandaria \
+#     --verbose \
+#     --keep-job-tabs
+
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MALLOC_ARENA_MAX=2 CONDA_ENV_NAME=twister WANDB_ENABLED=1 WANDB_PROJECT=rl-in-pixel-env-twister WANDB_ENTITY=ssl-lab WANDB_MODE=online PIXEL_RL_AC_UPDATES=20000 PIXEL_RL_ENVS=64 PIXEL_RL_BACKUP_EVERY=15 PIXEL_RL_LOG_EVERY=1000 PIXEL_RL_SAVE_EVERY=10000 PIXEL_RL_WM_ROLLOUT_VIDEO_EVERY=10000 PIXEL_RL_WM_HORIZON=512 PIXEL_RL_WM_RESPECT_TERMINAL=True PIXEL_RL_WM_INITIAL_SOURCE=real PIXEL_RL_WM_REWARD_QUANTIZE_THRESHOLD=0.1 PIXEL_RL_EVAL_REAL_EVERY=2000 PIXEL_RL_EVAL_REAL_VIDEO_EVERY=10000 PIXEL_RL_EVAL_REAL_EPS=5 PIXEL_RL_RESUME=False bash scripts/experiments/pong_pixel_rl_in_env.sh wm external_wm_ckpts/offline_ac_cpc_spatial/w0/checkpoints/checkpoints_100000_wm_only.ckpt pong_pixel_rl_in_env/logdir/offline-ac-cpc-zsrl-w0
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MALLOC_ARENA_MAX=2 CONDA_ENV_NAME=twister WANDB_ENABLED=1 WANDB_PROJECT=rl-in-pixel-env-twister WANDB_ENTITY=ssl-lab WANDB_MODE=online PIXEL_RL_AC_UPDATES=20000 PIXEL_RL_ENVS=64 PIXEL_RL_BACKUP_EVERY=15 PIXEL_RL_LOG_EVERY=1000 PIXEL_RL_SAVE_EVERY=10000 PIXEL_RL_WM_ROLLOUT_VIDEO_EVERY=10000 PIXEL_RL_WM_HORIZON=512 PIXEL_RL_WM_RESPECT_TERMINAL=True PIXEL_RL_WM_INITIAL_SOURCE=real PIXEL_RL_WM_REWARD_QUANTIZE_THRESHOLD=0.1 PIXEL_RL_EVAL_REAL_EVERY=2000 PIXEL_RL_EVAL_REAL_VIDEO_EVERY=10000 PIXEL_RL_EVAL_REAL_EPS=5 PIXEL_RL_RESUME=False bash scripts/experiments/pong_pixel_rl_in_env.sh wm external_wm_ckpts/offline_ac_cpc_spatial/w0p003/checkpoints/checkpoints_100000_wm_only.ckpt pong_pixel_rl_in_env/logdir/offline-ac-cpc-zsrl-w0p003
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MALLOC_ARENA_MAX=2 CONDA_ENV_NAME=twister WANDB_ENABLED=1 WANDB_PROJECT=rl-in-pixel-env-twister WANDB_ENTITY=ssl-lab WANDB_MODE=online PIXEL_RL_AC_UPDATES=20000 PIXEL_RL_ENVS=64 PIXEL_RL_BACKUP_EVERY=15 PIXEL_RL_LOG_EVERY=1000 PIXEL_RL_SAVE_EVERY=10000 PIXEL_RL_WM_ROLLOUT_VIDEO_EVERY=10000 PIXEL_RL_WM_HORIZON=512 PIXEL_RL_WM_RESPECT_TERMINAL=True PIXEL_RL_WM_INITIAL_SOURCE=real PIXEL_RL_WM_REWARD_QUANTIZE_THRESHOLD=0.1 PIXEL_RL_EVAL_REAL_EVERY=2000 PIXEL_RL_EVAL_REAL_VIDEO_EVERY=10000 PIXEL_RL_EVAL_REAL_EPS=5 PIXEL_RL_RESUME=False bash scripts/experiments/pong_pixel_rl_in_env.sh wm external_wm_ckpts/offline_ac_cpc_spatial/w0p005/checkpoints/checkpoints_100000_wm_only.ckpt pong_pixel_rl_in_env/logdir/offline-ac-cpc-zsrl-w0p005
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MALLOC_ARENA_MAX=2 CONDA_ENV_NAME=twister WANDB_ENABLED=1 WANDB_PROJECT=rl-in-pixel-env-twister WANDB_ENTITY=ssl-lab WANDB_MODE=online PIXEL_RL_AC_UPDATES=20000 PIXEL_RL_ENVS=64 PIXEL_RL_BACKUP_EVERY=15 PIXEL_RL_LOG_EVERY=1000 PIXEL_RL_SAVE_EVERY=10000 PIXEL_RL_WM_ROLLOUT_VIDEO_EVERY=10000 PIXEL_RL_WM_HORIZON=512 PIXEL_RL_WM_RESPECT_TERMINAL=True PIXEL_RL_WM_INITIAL_SOURCE=real PIXEL_RL_WM_REWARD_QUANTIZE_THRESHOLD=0.1 PIXEL_RL_EVAL_REAL_EVERY=2000 PIXEL_RL_EVAL_REAL_VIDEO_EVERY=10000 PIXEL_RL_EVAL_REAL_EPS=5 PIXEL_RL_RESUME=False bash scripts/experiments/pong_pixel_rl_in_env.sh wm external_wm_ckpts/offline_ac_cpc_spatial/w0p01/checkpoints/checkpoints_100000_wm_only.ckpt pong_pixel_rl_in_env/logdir/offline-ac-cpc-zsrl-w0p01
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MALLOC_ARENA_MAX=2 CONDA_ENV_NAME=twister WANDB_ENABLED=1 WANDB_PROJECT=rl-in-pixel-env-twister WANDB_ENTITY=ssl-lab WANDB_MODE=online PIXEL_RL_AC_UPDATES=20000 PIXEL_RL_ENVS=64 PIXEL_RL_BACKUP_EVERY=15 PIXEL_RL_LOG_EVERY=1000 PIXEL_RL_SAVE_EVERY=10000 PIXEL_RL_WM_ROLLOUT_VIDEO_EVERY=10000 PIXEL_RL_WM_HORIZON=512 PIXEL_RL_WM_RESPECT_TERMINAL=True PIXEL_RL_WM_INITIAL_SOURCE=real PIXEL_RL_WM_REWARD_QUANTIZE_THRESHOLD=0.1 PIXEL_RL_EVAL_REAL_EVERY=2000 PIXEL_RL_EVAL_REAL_VIDEO_EVERY=10000 PIXEL_RL_EVAL_REAL_EPS=5 PIXEL_RL_RESUME=False bash scripts/experiments/pong_pixel_rl_in_env.sh wm external_wm_ckpts/offline_ac_cpc_spatial/w0p02/checkpoints/checkpoints_100000_wm_only.ckpt pong_pixel_rl_in_env/logdir/offline-ac-cpc-zsrl-w0p02
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MALLOC_ARENA_MAX=2 CONDA_ENV_NAME=twister WANDB_ENABLED=1 WANDB_PROJECT=rl-in-pixel-env-twister WANDB_ENTITY=ssl-lab WANDB_MODE=online PIXEL_RL_AC_UPDATES=20000 PIXEL_RL_ENVS=64 PIXEL_RL_BACKUP_EVERY=15 PIXEL_RL_LOG_EVERY=1000 PIXEL_RL_SAVE_EVERY=10000 PIXEL_RL_WM_ROLLOUT_VIDEO_EVERY=10000 PIXEL_RL_WM_HORIZON=512 PIXEL_RL_WM_RESPECT_TERMINAL=True PIXEL_RL_WM_INITIAL_SOURCE=real PIXEL_RL_WM_REWARD_QUANTIZE_THRESHOLD=0.1 PIXEL_RL_EVAL_REAL_EVERY=2000 PIXEL_RL_EVAL_REAL_VIDEO_EVERY=10000 PIXEL_RL_EVAL_REAL_EPS=5 PIXEL_RL_RESUME=False bash scripts/experiments/pong_pixel_rl_in_env.sh wm external_wm_ckpts/offline_ac_cpc_spatial/w0p05/checkpoints/checkpoints_100000_wm_only.ckpt pong_pixel_rl_in_env/logdir/offline-ac-cpc-zsrl-w0p05
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MALLOC_ARENA_MAX=2 CONDA_ENV_NAME=twister WANDB_ENABLED=1 WANDB_PROJECT=rl-in-pixel-env-twister WANDB_ENTITY=ssl-lab WANDB_MODE=online PIXEL_RL_AC_UPDATES=20000 PIXEL_RL_ENVS=64 PIXEL_RL_BACKUP_EVERY=15 PIXEL_RL_LOG_EVERY=1000 PIXEL_RL_SAVE_EVERY=10000 PIXEL_RL_WM_ROLLOUT_VIDEO_EVERY=10000 PIXEL_RL_WM_HORIZON=512 PIXEL_RL_WM_RESPECT_TERMINAL=True PIXEL_RL_WM_INITIAL_SOURCE=real PIXEL_RL_WM_REWARD_QUANTIZE_THRESHOLD=0.1 PIXEL_RL_EVAL_REAL_EVERY=2000 PIXEL_RL_EVAL_REAL_VIDEO_EVERY=10000 PIXEL_RL_EVAL_REAL_EPS=5 PIXEL_RL_RESUME=False bash scripts/experiments/pong_pixel_rl_in_env.sh wm external_wm_ckpts/offline_ac_cpc_spatial/w0p1/checkpoints/checkpoints_100000_wm_only.ckpt pong_pixel_rl_in_env/logdir/offline-ac-cpc-zsrl-w0p1
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MALLOC_ARENA_MAX=2 CONDA_ENV_NAME=twister WANDB_ENABLED=1 WANDB_PROJECT=rl-in-pixel-env-twister WANDB_ENTITY=ssl-lab WANDB_MODE=online PIXEL_RL_AC_UPDATES=20000 PIXEL_RL_ENVS=64 PIXEL_RL_BACKUP_EVERY=15 PIXEL_RL_LOG_EVERY=1000 PIXEL_RL_SAVE_EVERY=10000 PIXEL_RL_WM_ROLLOUT_VIDEO_EVERY=10000 PIXEL_RL_WM_HORIZON=512 PIXEL_RL_WM_RESPECT_TERMINAL=True PIXEL_RL_WM_INITIAL_SOURCE=real PIXEL_RL_WM_REWARD_QUANTIZE_THRESHOLD=0.1 PIXEL_RL_EVAL_REAL_EVERY=2000 PIXEL_RL_EVAL_REAL_VIDEO_EVERY=10000 PIXEL_RL_EVAL_REAL_EPS=5 PIXEL_RL_RESUME=False bash scripts/experiments/pong_pixel_rl_in_env.sh wm external_wm_ckpts/offline_ac_cpc_spatial/w1/checkpoints/checkpoints_100000_wm_only.ckpt pong_pixel_rl_in_env/logdir/offline-ac-cpc-zsrl-w1

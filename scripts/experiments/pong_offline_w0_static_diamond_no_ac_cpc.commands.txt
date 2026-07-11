@@ -1,0 +1,14 @@
+# TWISTER Pong offline WM training on static DIAMOND replay without AC-CPC.
+#
+# This is the offline counterpart to the reproduction no-AC-CPC ablation.
+# It keeps spatial regularization disabled (w=0) so AC-CPC is the only removed
+# regularizer relative to the plain offline w=0 baseline.
+#
+# Run:
+#   tiny-exp-scheduler run scripts/experiments/pong_offline_w0_static_diamond_no_ac_cpc.commands.txt \
+#     --cuda-devices auto \
+#     --logs-dir runs/pong_offline_w0_static_diamond_no_ac_cpc/scheduler_logs \
+#     --verbose \
+#     --keep-job-tabs
+
+bash -lc 'cd /home/lyk/projects/twister && OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 OPENBLAS_NUM_THREADS=8 NUMEXPR_NUM_THREADS=8 TWISTER_TORCH_NUM_THREADS=8 conda run --no-capture-output -n twister python -u train_offline.py --dataset-path /SSD_RAID0/lyk/shared_replay/diamond_pong_for_simulus_twister/twister/train --run-root runs/pong_offline_w0_static_diamond_no_ac_cpc/logdir --run-name twister_pong_offline_static_diamond_w0_no_ac_cpc_model=base --model-size base --wm-initial-source real --spatial-regu-weight 0 --disable-spatial-regu --mask-preset mask1 --train-steps 100000 --batch-size 16 --batch-length 64 --torch-num-threads 8 --log-every 10 --override-config '"'"'{"loss_contrastive_scale":0.0}'"'"' --wandb-enabled 1 --wandb-project twister-ac-cpc-ablation --wandb-entity ssl-lab --wandb-mode online'

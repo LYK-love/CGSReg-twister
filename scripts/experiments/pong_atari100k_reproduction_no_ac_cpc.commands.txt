@@ -1,0 +1,14 @@
+# TWISTER Atari100K Pong reproduction without AC-CPC.
+#
+# This isolates the paper-style AC-CPC ablation by setting
+# loss_contrastive_scale=0.0. The training code skips the contrastive forward
+# and contrastive figure logging when this scale is zero.
+#
+# Run:
+#   tiny-exp-scheduler run scripts/experiments/pong_atari100k_reproduction_no_ac_cpc.commands.txt \
+#     --cuda-devices auto \
+#     --logs-dir callbacks/pong_atari100k_reproduction_no_ac_cpc/scheduler_logs \
+#     --verbose \
+#     --keep-job-tabs
+
+bash -lc 'cd /home/lyk/projects/twister && WANDB_PROJECT=twister-ac-cpc-ablation WANDB_ENTITY=ssl-lab WANDB_MODE=online env_name=atari100k-pong run_name=pong_atari100k_reproduction_no_ac_cpc override_config='"'"'{"model_size":"base","loss_contrastive_scale":0.0}'"'"' conda run --no-capture-output -n twister python3 main.py --wandb --eval_period_step 5000 --saving_period_epoch 5 --step_log_period 100 --keep_last_k 3'

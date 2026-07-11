@@ -1,0 +1,34 @@
+# Offline TWISTER WM training on the Atari100K repro online ReplayBuffer.
+#
+# Purpose: isolate the dataset effect by replacing the DIAMOND-converted static
+# replay with TWISTER's own Atari100K Pong replay buffer while keeping AC-CPC on.
+#
+# Dataset:
+#   callbacks/atari100k/atari100k-pong/ReplayBuffer
+# Source run:
+#   callbacks/atari100k/atari100k-pong/checkpoints_epoch_50_step_100000.ckpt
+#
+# Protocol:
+#   - base TWISTER WM
+#   - AC-CPC enabled; no loss_contrastive_scale override
+#   - mask1 spatial regularizer
+#   - spatial weights: 0.0, 0.01, 0.1, 1.0
+#   - 100k offline optimizer steps
+#   - batch size 16, batch length 64
+#   - native ReplayBuffer.load/sample path, matching dyna-style TWISTER training
+#   - mask1 derived from consecutive-frame motion for spatial regularization
+#
+# Launch from the TWISTER repository root:
+#
+#   conda activate twister
+#   cd "$HOME/projects/twister"
+#   tiny-exp-scheduler run scripts/experiments/pong_offline_replay_ac_cpc_w_sweep.commands.txt \
+#     --cuda-devices auto \
+#     --logs-dir runs/pong_offline_replay_ac_cpc_w_sweep/scheduler_logs \
+#     --verbose \
+#     --keep-job-tabs
+
+bash -lc 'cd "$HOME/projects/twister" && OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 NUMEXPR_NUM_THREADS=2 TWISTER_TORCH_NUM_THREADS=2 conda run --no-capture-output -n twister python -u train_offline.py --dataset-path callbacks/atari100k/atari100k-pong/ReplayBuffer --run-root runs/pong_offline_replay_ac_cpc_w_sweep/logdir --run-name offline-replay-ac-cpc-w0 --model-size base --wm-initial-source real --spatial-regu-weight 0 --mask-preset mask1 --train-steps 100000 --batch-size 16 --batch-length 64 --torch-num-threads 2 --log-every 10 --save-every 1000 --cache-dataset=true --native-replay-mask-mode motion --wandb-enabled 1 --wandb-project twister-offline-replay-ablation --wandb-mode online --wandb-entity ssl-lab'
+bash -lc 'cd "$HOME/projects/twister" && OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 NUMEXPR_NUM_THREADS=2 TWISTER_TORCH_NUM_THREADS=2 conda run --no-capture-output -n twister python -u train_offline.py --dataset-path callbacks/atari100k/atari100k-pong/ReplayBuffer --run-root runs/pong_offline_replay_ac_cpc_w_sweep/logdir --run-name offline-replay-ac-cpc-w0p01 --model-size base --wm-initial-source real --spatial-regu-weight 0.01 --mask-preset mask1 --train-steps 100000 --batch-size 16 --batch-length 64 --torch-num-threads 2 --log-every 10 --save-every 1000 --cache-dataset=true --native-replay-mask-mode motion --wandb-enabled 1 --wandb-project twister-offline-replay-ablation --wandb-mode online --wandb-entity ssl-lab'
+bash -lc 'cd "$HOME/projects/twister" && OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 NUMEXPR_NUM_THREADS=2 TWISTER_TORCH_NUM_THREADS=2 conda run --no-capture-output -n twister python -u train_offline.py --dataset-path callbacks/atari100k/atari100k-pong/ReplayBuffer --run-root runs/pong_offline_replay_ac_cpc_w_sweep/logdir --run-name offline-replay-ac-cpc-w0p1 --model-size base --wm-initial-source real --spatial-regu-weight 0.1 --mask-preset mask1 --train-steps 100000 --batch-size 16 --batch-length 64 --torch-num-threads 2 --log-every 10 --save-every 1000 --cache-dataset=true --native-replay-mask-mode motion --wandb-enabled 1 --wandb-project twister-offline-replay-ablation --wandb-mode online --wandb-entity ssl-lab'
+bash -lc 'cd "$HOME/projects/twister" && OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 NUMEXPR_NUM_THREADS=2 TWISTER_TORCH_NUM_THREADS=2 conda run --no-capture-output -n twister python -u train_offline.py --dataset-path callbacks/atari100k/atari100k-pong/ReplayBuffer --run-root runs/pong_offline_replay_ac_cpc_w_sweep/logdir --run-name offline-replay-ac-cpc-w1 --model-size base --wm-initial-source real --spatial-regu-weight 1 --mask-preset mask1 --train-steps 100000 --batch-size 16 --batch-length 64 --torch-num-threads 2 --log-every 10 --save-every 1000 --cache-dataset=true --native-replay-mask-mode motion --wandb-enabled 1 --wandb-project twister-offline-replay-ablation --wandb-mode online --wandb-entity ssl-lab'

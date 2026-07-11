@@ -1,0 +1,13 @@
+# TWISTER Pong offline WM training on static replay converted from DIAMOND.
+#
+# Uses the same converted replay root as Simulus:
+#   /SSD_RAID0/lyk/shared_replay/diamond_pong_for_simulus_twister
+#
+# Run:
+#   tiny-exp-scheduler run scripts/experiments/pong_offline_w0_static_diamond.commands.txt \
+#     --cuda-devices auto \
+#     --logs-dir runs/pong_offline_w0_static_diamond/scheduler_logs \
+#     --verbose \
+#     --keep-job-tabs
+
+python -u train_offline.py --dataset-path /SSD_RAID0/lyk/shared_replay/diamond_pong_for_simulus_twister/twister/train --run-root runs/pong_offline_w0_static_diamond/logdir --run-name twister_pong_offline_static_diamond_w0_model=base --model-size base --wm-initial-source real --spatial-regu-weight 0 --disable-spatial-regu --mask-preset mask1 --train-steps 100000 --batch-size 16 --batch-length 64 --wandb-enabled 1 --wandb-project twister --wandb-mode online

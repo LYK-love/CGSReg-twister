@@ -1,0 +1,15 @@
+# Retry only the hung native ReplayBuffer offline AC-CPC w0p1 zero-shot RL job.
+#
+# Original hung run:
+#   pong_pixel_rl_in_env/logdir/backend=wm_wm_family=twister_ckpt=offline_replay_ac_cpc_w0p1_step100000_ac20k_envs64_backup15_horizon512_rewq0p1_reset=real_host=pandaria
+#
+# Retry run name has a retry suffix to avoid overwriting the hung partial run.
+#
+# Launch:
+#   tiny-exp-scheduler run scripts/experiments/pong_pixel_rl_offline_replay_ac_cpc_w0p1_zero_shot_retry1.commands.txt \
+#     --cuda-devices auto \
+#     --logs-dir pong_pixel_rl_in_env/scheduler_logs/offline_replay_ac_cpc_w0p1_zero_shot_retry1 \
+#     --verbose \
+#     --keep-job-tabs
+
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MALLOC_ARENA_MAX=2 CONDA_ENV_NAME=twister WANDB_ENABLED=1 WANDB_PROJECT=rl-in-pixel-env-twister WANDB_ENTITY=ssl-lab WANDB_MODE=online PIXEL_RL_AC_UPDATES=20000 PIXEL_RL_ENVS=64 PIXEL_RL_BACKUP_EVERY=15 PIXEL_RL_LOG_EVERY=1000 PIXEL_RL_SAVE_EVERY=10000 PIXEL_RL_WM_ROLLOUT_VIDEO_EVERY=10000 PIXEL_RL_WM_HORIZON=512 PIXEL_RL_WM_RESPECT_TERMINAL=True PIXEL_RL_WM_INITIAL_SOURCE=real PIXEL_RL_WM_REWARD_QUANTIZE_THRESHOLD=0.1 PIXEL_RL_EVAL_REAL_EVERY=2000 PIXEL_RL_EVAL_REAL_VIDEO_EVERY=10000 PIXEL_RL_EVAL_REAL_EPS=5 PIXEL_RL_RESUME=False bash scripts/experiments/pong_pixel_rl_in_env.sh wm runs/pong_offline_replay_ac_cpc_w_sweep/logdir/offline-replay-ac-cpc-w0p1/checkpoints/checkpoints_100000.ckpt pong_pixel_rl_in_env/logdir/backend=wm_wm_family=twister_ckpt=offline_replay_ac_cpc_w0p1_step100000_ac20k_envs64_backup15_horizon512_rewq0p1_reset=real_host=pandaria_retry1

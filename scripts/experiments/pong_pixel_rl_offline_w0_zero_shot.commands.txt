@@ -1,0 +1,13 @@
+# Zero-shot RL in the offline-trained TWISTER w=0 Pong world model.
+#
+# Frozen WM checkpoint:
+#   runs/pong_offline_w0_static_diamond/logdir/twister_pong_offline_static_diamond_w0_model=base/checkpoints/checkpoints_100000.ckpt
+#
+# Suggested launch from the TWISTER repository root:
+#   tiny-exp-scheduler run scripts/experiments/pong_pixel_rl_offline_w0_zero_shot.commands.txt \
+#     --cuda-devices auto \
+#     --logs-dir pong_pixel_rl_in_env/scheduler_logs/offline_w0_zero_shot \
+#     --verbose \
+#     --keep-job-tabs
+
+CONDA_ENV_NAME=twister WANDB_ENABLED=1 WANDB_PROJECT=rl-in-pixel-env-twister WANDB_ENTITY=ssl-lab WANDB_MODE=online PIXEL_RL_AC_UPDATES=20000 PIXEL_RL_ENVS=64 PIXEL_RL_BACKUP_EVERY=15 PIXEL_RL_LOG_EVERY=1000 PIXEL_RL_SAVE_EVERY=10000 PIXEL_RL_WM_ROLLOUT_VIDEO_EVERY=10000 PIXEL_RL_WM_HORIZON=512 PIXEL_RL_WM_RESPECT_TERMINAL=True PIXEL_RL_WM_INITIAL_SOURCE=real PIXEL_RL_WM_REWARD_QUANTIZE_THRESHOLD=0.1 PIXEL_RL_EVAL_REAL_EVERY=2000 PIXEL_RL_EVAL_REAL_VIDEO_EVERY=10000 PIXEL_RL_EVAL_REAL_EPS=5 PIXEL_RL_RESUME=False bash scripts/experiments/pong_pixel_rl_in_env.sh wm runs/pong_offline_w0_static_diamond/logdir/twister_pong_offline_static_diamond_w0_model=base/checkpoints/checkpoints_100000.ckpt pong_pixel_rl_in_env/logdir/offline-w0-zsrl-h512-rewq0p1-full

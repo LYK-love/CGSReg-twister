@@ -1,0 +1,9 @@
+# TWISTER online/dyna Atari100K Pong runs that freeze only the world model
+# after the requested training stage. Policy/value training and real-env
+# collection continue.
+#
+# Scheduler:
+# tiny-exp-scheduler run scripts/experiments/pong_dyna_freeze_wm.commands.txt --cuda-devices 0,1,2,3,4,5,6,7 --logs-dir callbacks/pong_dyna_freeze_wm/scheduler_logs --verbose --keep-job-tabs
+
+WANDB_PROJECT=twister-dyna-freeze-wm WANDB_ENTITY=ssl-lab WANDB_MODE=online env_name=atari100k-pong run_name=pong_dyna_freezewm_frac0p5 override_config='{"model_size":"base","freeze_wm_after_step":50000}' python3 main.py --wandb --eval_period_step 5000 --saving_period_epoch 5 --step_log_period 100
+WANDB_PROJECT=twister-dyna-freeze-wm WANDB_ENTITY=ssl-lab WANDB_MODE=online env_name=atari100k-pong run_name=pong_dyna_freezewm_frac0p75 override_config='{"model_size":"base","freeze_wm_after_step":75000}' python3 main.py --wandb --eval_period_step 5000 --saving_period_epoch 5 --step_log_period 100

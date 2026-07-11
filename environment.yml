@@ -1,0 +1,33 @@
+name: twister
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pip=23.3
+  - tmux
+  - rust
+  - wget
+  - unrar
+  - pip:
+      - setuptools<66
+      - wheel==0.37.1
+      - gym==0.19.0
+      - atari-py==0.2.9
+      - opencv-python==4.7.0.72
+      - torch==2.0.1
+      - torchvision==0.15.2
+      - numpy==1.23.5
+      - tqdm
+      - wandb
+      - av
+      - tensorboard
+      - imageio
+      - imageio-ffmpeg
+      - einops
+      - pillow
+      - mujoco==2.3.7
+      - dm_control==1.0.14
+      - pygame
+      - flask
+      - flask-socketio
